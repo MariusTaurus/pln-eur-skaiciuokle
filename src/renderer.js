@@ -9,6 +9,12 @@
     let kursas = 4.4;
     let PVM = 1.21;
     let isFirstRow = true;
+
+   const presets = [
+      { percentAdd: 1.05, kursas: 4.4, PVM: 1.21 },
+      { percentAdd: 1.20, kursas: 4.4, PVM: 1.21 },
+      { percentAdd: 1.50, kursas: 4.4, PVM: 1.21 }
+    ]; 
   
     function createRow() {
       const inputValue = Number(inputNumber.value);
@@ -75,6 +81,39 @@
 
       isFirstRow = true;
     }
+
+    function applyPreset(index) {
+      const preset = presets[index];
+      percentAdd = preset.percentAdd;
+      kursas = preset.kursas;
+      PVM = preset.PVM;
+      isFirstRow = true;
+      clearRows();
+
+      for (let i = 1; i <= presets.length; i++) {
+        const presetButton = document.getElementById(`preset${i}Button`);
+        presetButton.classList.remove('active');
+      }
+      
+      const activePresetButton = document.getElementById(`preset${index + 1}Button`);
+      activePresetButton.classList.add('active');      
+    }
+  
+    const preset1Button = document.getElementById('preset1Button');
+    const preset2Button = document.getElementById('preset2Button');
+    const preset3Button = document.getElementById('preset3Button');
+
+    preset1Button.addEventListener('click', () => {
+      applyPreset(0);
+    });
+  
+    preset2Button.addEventListener('click', () => {
+      applyPreset(1);
+    });
+  
+    preset3Button.addEventListener('click', () => {
+      applyPreset(2);
+    }); 
   
     convertButton.addEventListener('click', createRow);
     inputNumber.addEventListener('keydown', handleInputKeyPress);

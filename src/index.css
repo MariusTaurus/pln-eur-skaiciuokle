@@ -55,6 +55,10 @@ button:hover {
   background-color: #45a049;
 }
 
+button.active {
+  background-color: #4b45a0;
+}
+
 .output-value {
   font-weight: bold;
 }
@@ -63,3 +67,4 @@ button:hover {
   margin-top: 20px;
   font-weight: bold;
 }
+
