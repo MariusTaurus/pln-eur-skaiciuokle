@@ -87,7 +87,6 @@
       percentAdd = preset.percentAdd;
       kursas = preset.kursas;
       PVM = preset.PVM;
-      isFirstRow = true;
       clearRows();
 
       for (let i = 1; i <= presets.length; i++) {
