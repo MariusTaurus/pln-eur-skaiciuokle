@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', () => {
     isFirstRow = true;
   }
 
-  function showPresetWindow(presetIndex) {
+ function showPresetWindow(presetIndex) {
     const preset = presets[presetIndex];
 
     // Open a new window for changing values
@@ -178,29 +178,51 @@ window.addEventListener('DOMContentLoaded', () => {
           </script>
         </body>
       </html>
-    `;
+    `; 
 
     // Set the content of the new window
     presetWindow.document.open();
     presetWindow.document.write(windowContent);
     presetWindow.document.close();
-  }
+  }  
 
+    
   function applyPreset(index) {
     const preset = presets[index];
     percentAdd = preset.percentAdd;
     kursas = preset.kursas;
     PVM = preset.PVM;
-    clearRows();
 
+    let newSum = 0;
+  
+    // Recalculate outputs
+    for (let i = 0; i < rowContainer.children.length; i++) {
+      const row = rowContainer.children[i];
+      const inputSpan = row.querySelector('.input-column span');
+      const outputSpan = row.querySelector('.output-column span');
+      const inputValue = Number(inputSpan.textContent);
+      const outputValue = Number((inputValue * percentAdd / kursas * PVM).toFixed(2));
+      outputSpan.textContent = outputValue.toFixed(2);
+  
+      // Update the sum
+      newSum += outputValue;
+    }
+
+    // Update the sum element
+    sum = newSum;
+    sumElement.textContent = `Suma EUR: ${sum.toFixed(2)}`;
+  
+    // Update active preset button
     for (let i = 1; i <= presets.length; i++) {
       const presetButton = document.getElementById(`preset${i}Button`);
       presetButton.classList.remove('active');
     }
-
+  
     const activePresetButton = document.getElementById(`preset${index + 1}Button`);
     activePresetButton.classList.add('active');
   }
+  
+  
 
   const preset1Button = document.getElementById('preset1Button');
   const preset2Button = document.getElementById('preset2Button');
